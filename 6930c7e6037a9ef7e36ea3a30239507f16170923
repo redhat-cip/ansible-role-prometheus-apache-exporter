@@ -1,0 +1,8 @@
+Code-Review+2: Yanis Guenane <yguenane@gmail.com>
+Workflow+1: Yanis Guenane <yguenane@gmail.com>
+Verified+2: Jenkins CI <jenkins@softwarefactory-project.io>
+Submitted-by: Jenkins CI <jenkins@softwarefactory-project.io>
+Submitted-at: Wed, 06 Dec 2017 14:50:48 +0000
+Reviewed-on: https://softwarefactory-project.io/r/10536
+Project: ansible/ansible-role-prometheus-apache-exporter
+Branch: refs/heads/master
