@@ -41,6 +41,15 @@
     name: apache_exporter
     update_cache: yes
 
+- name: Ensure start-up configuration is set
+  become: True
+  lineinfile:
+    path: /etc/default/apache_exporter
+    regexp: '^APACHE_EXPORTER_OPTS='
+    line: 'APACHE_EXPORTER_OPTS="-{{ " -".join(prometheus_apache_exporter_opts) }}"'
+  when: prometheus_apache_exporter_opts is defined
+  notify: apache-exporter-restart
+
 - name: Ensure apache-exporter is started and enabled
   become: True
   service:
