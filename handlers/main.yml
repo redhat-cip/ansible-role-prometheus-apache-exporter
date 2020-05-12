@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 #
-# Copyright 2017 Red Hat, Inc.
+# Copyright 2017-2020 Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -20,3 +20,9 @@
   service:
     name: apache_exporter
     state: restarted
+
+- name: apache-exporter-httpd-reload
+  become: True
+  service:
+    name: httpd
+    state: reloaded
