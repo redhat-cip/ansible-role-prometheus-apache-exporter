@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 #
-# Copyright 2017 Red Hat, Inc.
+# Copyright 2017-2020 Red Hat, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -35,11 +35,18 @@
       - https://raw.githubusercontent.com/lest/prometheus-rpm/master/RPM-GPG-KEY-prometheus-rpm
 
 
+- name: Ensure apache/httpd server-status is enabled
+  become: True
+  copy:
+    src: status.conf
+    dest: /etc/httpd/conf.d/status.conf
+
 - name: Ensure apache-exporter is installed
   become: True
   package:
     name: apache_exporter
     update_cache: yes
+  notify: apache-exporter-httpd-reload
 
 - name: Ensure start-up configuration is set
   become: True
