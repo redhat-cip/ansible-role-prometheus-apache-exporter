@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c714bf64_b8f1b6f2",
+        "filename": "tasks/main.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 606
+      },
+      "writtenOn": "2020-05-12T17:15:27Z",
+      "side": 1,
+      "message": "does the notify need to be in both tasks?  Just curious what will happen if the above copy happens but httpd was already installed?",
+      "revId": "abdcdd6f34d290e6f4197c0ac1299676cdd81736",
+      "serverId": "6c1dc8ef-8b94-40e4-bd83-c2359d45ecc0",
+      "unresolved": false
+    }
+  ]
+}
