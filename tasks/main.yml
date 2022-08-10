@@ -16,40 +16,41 @@
 
 ---
 - name: Import GPG keys
-  become: True
+  become: true
   rpm_key:
     key: '{{ item }}'
   with_items:
-      - https://packagecloud.io/prometheus-rpm/release/gpgkey
-      - https://raw.githubusercontent.com/lest/prometheus-rpm/master/RPM-GPG-KEY-prometheus-rpm
+    - https://packagecloud.io/prometheus-rpm/release/gpgkey
+    - https://raw.githubusercontent.com/lest/prometheus-rpm/master/RPM-GPG-KEY-prometheus-rpm
 
 - name: Have the prometheus repo configured
-  become: True
+  become: true
   yum_repository:
     name: prometheus
     description: prometheus
     baseurl: https://packagecloud.io/prometheus-rpm/release/el/$releasever/$basearch
-    gpgcheck: yes
+    gpgcheck: true
     gpgkey:
       - https://packagecloud.io/prometheus-rpm/release/gpgkey
       - https://raw.githubusercontent.com/lest/prometheus-rpm/master/RPM-GPG-KEY-prometheus-rpm
 
 
 - name: Ensure apache/httpd server-status is enabled
-  become: True
+  become: true
   copy:
     src: status.conf
     dest: /etc/httpd/conf.d/status.conf
+    mode: 0640
   notify: apache-exporter-httpd-reload
 
 - name: Ensure apache-exporter is installed
-  become: True
+  become: true
   package:
     name: apache_exporter
-    update_cache: yes
+    update_cache: true
 
 - name: Ensure start-up configuration is set
-  become: True
+  become: true
   lineinfile:
     path: /etc/default/apache_exporter
     regexp: '^APACHE_EXPORTER_OPTS='
@@ -58,8 +59,16 @@
   notify: apache-exporter-restart
 
 - name: Ensure apache-exporter is started and enabled
-  become: True
+  become: true
   service:
     name: apache_exporter
     state: started
-    enabled: yes
+    enabled: true
+
+- name: Allow incoming connections to apache_exporter
+  firewalld:
+    port: 9117/tcp
+    zone: prometheus
+    state: enabled
+    permanent: true
+    immediate: true

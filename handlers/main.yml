@@ -16,13 +16,13 @@
 
 ---
 - name: apache-exporter-restart
-  become: True
+  become: true
   service:
     name: apache_exporter
     state: restarted
 
 - name: apache-exporter-httpd-reload
-  become: True
+  become: true
   service:
     name: httpd
     state: reloaded
