@@ -15,13 +15,13 @@
 # under the License.
 
 ---
-- name: apache-exporter-restart
+- name: Restart apache exporter
   become: true
   service:
     name: apache_exporter
     state: restarted
 
-- name: apache-exporter-httpd-reload
+- name: Reload httpd apache exporter
   become: true
   service:
     name: httpd

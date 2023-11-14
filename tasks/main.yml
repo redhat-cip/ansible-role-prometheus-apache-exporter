@@ -40,14 +40,13 @@
   copy:
     src: status.conf
     dest: /etc/httpd/conf.d/status.conf
-    mode: 0640
-  notify: apache-exporter-httpd-reload
+    mode: "0640"
+  notify: Reload httpd apache exporter
 
 - name: Ensure apache-exporter is installed
   become: true
   package:
     name: apache_exporter
-    update_cache: true
 
 - name: Ensure start-up configuration is set
   become: true
@@ -56,7 +55,7 @@
     regexp: '^APACHE_EXPORTER_OPTS='
     line: 'APACHE_EXPORTER_OPTS="--{{ " --".join(prometheus_apache_exporter_opts) }}"'
   when: prometheus_apache_exporter_opts is defined
-  notify: apache-exporter-restart
+  notify: Restart apache exporter
 
 - name: Ensure apache-exporter is started and enabled
   become: true
@@ -66,7 +65,7 @@
     enabled: true
 
 - name: Allow incoming connections to apache_exporter
-  firewalld:
+  ansible.posix.firewalld:
     port: 9117/tcp
     zone: prometheus
     state: enabled
